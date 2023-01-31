@@ -127,6 +127,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run: yum install tar gzip
 
       - run:
           name: Ensure front-end infrastructure exists
