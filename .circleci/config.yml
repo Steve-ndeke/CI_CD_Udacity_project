@@ -1,6 +1,6 @@
 version: 2.1
 
-# The two jobs that will build front-end and back-end.
+# The two jobs that will build front-end and back-end. test
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
