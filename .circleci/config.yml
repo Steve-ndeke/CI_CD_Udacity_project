@@ -241,7 +241,7 @@ jobs:
 
   run-migrations:
     docker:
-      - image: cimg/python:3.10
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - install_awscli
