@@ -366,7 +366,7 @@ jobs:
             mkdir files
             cd files
 
-            tar -C ../../../backend -czf artifact.tar.gz
+            tar -C ../../../backend -czf artifact.tar.gz .
             cd ..
 
             cat inventory.txt
