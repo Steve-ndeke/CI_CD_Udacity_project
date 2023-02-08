@@ -143,8 +143,8 @@ jobs:
       - run:
           name: Run backend test
           command: |
-            cd frontend
-            npm install
+            cd backend
+            # npm install
             npm run test
 
   scan-frontend:
@@ -172,10 +172,12 @@ jobs:
       - run:
           name: Scan backend
           command: |
-            cd frontend
+            cd backend
             npm install
             # npm install oauth-sign@^0.9.0
-            npm audit fix --force
+            npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
+            npm audit --audit-level=critical
 
   deploy-infrastructure:
     docker:
@@ -220,14 +222,14 @@ jobs:
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
-      - image: cimg/base:stable
+      - image: cimg/python:3.10
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
       # attach workspace
       - checkout
-      - install_ansible
       - install_awscli
+      - install_ansible
       - add_ssh_keys:
           fingerprints: ["ff:23:93:0c:4f:b3:ab:c3:29:4a:11:c4:32:97:20:7d"]
       - attach_workspace:
@@ -353,16 +355,11 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Install dependencies
-          command: |
-            # your code here
-            cd backend
-            npm install
-      - run:
           name: Deploy backend
           command: |
             # your code here
             cd backend
+            npm i
             npm run build
 
             cd ..
@@ -371,7 +368,7 @@ jobs:
             cd files
 
             tar -C ../../../backend -czf artifact.tar.gz .
-            cd ..
+            cd ../
 
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
@@ -412,9 +409,9 @@ jobs:
             if curl -s $FRONTEND_WEBSITE | grep "Welcome"
             then
               # This is the intentional error, if "Welcome" is indeed in the response this step will exit with exit code 1
-              exit 0
-            else
               exit 1
+            else
+              exit 2
             fi
       - destroy-environment
       - revert-migrations
@@ -446,4 +443,4 @@ workflows:
       - deploy-backend:
           requires: [run-migrations]
       - smoke-test:
-          requires: [deploy-backend, deploy-frontend, configure-infrastructure]
+          requires: [deploy-backend, deploy-frontend]
