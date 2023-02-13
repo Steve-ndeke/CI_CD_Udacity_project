@@ -221,7 +221,7 @@ jobs:
             --filter Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7} \
             --output text 
             )
-            curl --insecure https://kvdb.io/R63Y8MaE9CN7NVy6omZChH/public_dns  -d ${BACKEND_IP}
+            curl --insecure https://kvdb.io/${KVDB_BUCKET}/public_dns  -d ${BACKEND_IP}
       - persist_to_workspace:
           root: ~/
           paths:
