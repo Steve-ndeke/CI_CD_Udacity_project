@@ -467,7 +467,7 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            export OldWorkflowID=$(curl --insecure https://kvdb.io/MU1LxWLbS3TdLumBrcmzMB/old_workflow_id)
+            export OldWorkflowID=$(curl --insecure https://kvdb.io/R63Y8MaE9CN7NVy6omZChH/old_workflow_id)
             export STACKS=$(aws cloudformation list-stacks \
             --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
