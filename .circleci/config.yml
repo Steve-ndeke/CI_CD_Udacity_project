@@ -195,17 +195,17 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
               --tags project=udapeople
 
       - run:
           name: Ensure front-end infrastructure exists
           command: |
             aws cloudformation deploy \
-            --template-file .circleci/files/frontend.yml \
-            --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-            --tags project=udapeople
+              --template-file .circleci/files/frontend.yml \
+              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
+              --tags project=udapeople
 
       - run:
           name: Add back-end ip to ansible inventory
@@ -221,7 +221,7 @@ jobs:
             --filter Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7} \
             --output text 
             )
-            curl --insecure https://kvdb.io/R63Y8MaE9CN7NVy6omZChH/public_dns  -d ${BACKEND_IP}
+            curl --insecure https://kvdb.io/MU1LxWLbS3TdLumBrcmzMB/public_dns  -d ${BACKEND_IP}
       - persist_to_workspace:
           root: ~/
           paths:
@@ -273,7 +273,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-              curl /${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              curl --insecure https://kvdb.io/R63Y8MaE9CN7NVy6omZChH/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             else
              echo "No migrations are pending"
             fi
