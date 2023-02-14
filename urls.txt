@@ -1,5 +1,3 @@
 Github Url: https://github.com/Steve-ndeke/CI_CD_Udacity_project
 
-Public URL for  S3 Bucket : http://udapeople-43c7b03.s3-website-us-east-1.amazonaws.com/
-
-CLoudfront URL: http://d242uxony6gv7l.cloudfront.net
+Public URL for  S3 Bucket : http://udapeople-47f858d.s3-website-us-east-1.amazonaws.com/#/employees
