@@ -467,11 +467,13 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
+            export result=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
+            pattern="udapeople-"
+            OldWorkflowID="${result##${pattern}}"
             export STACKS=$(aws cloudformation list-stacks \
             --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
-            echo Old Workflow ID: ${OldWorkflowID}
+            echo Old Workflow ID: $OldWorkflowID
             echo stack names: "${STACKS[@]}"
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
